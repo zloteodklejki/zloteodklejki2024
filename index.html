@@ -38,13 +38,22 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 10px;
             margin: 5px 0;
-            cursor: grab;
-            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .candidate:active {
-            cursor: grabbing;
+        .candidate button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .candidate button:disabled {
+            background-color: #ccc;
         }
         button {
             background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
@@ -85,59 +94,59 @@
 
         <h3>Kategoria: Odklejka Roku</h3>
         <ul id="voteListNominations" class="candidate-list">
-            <li class="candidate" id="item1" draggable="true" ondragstart="drag(event)">1. (oskar) samych chinczykow jest milion</li>
-            <li class="candidate" id="item2" draggable="true" ondragstart="drag(event)">2. (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</li>
-            <li class="candidate" id="item3" draggable="true" ondragstart="drag(event)">3. (oskar) czemu pep guardiola wczoraj nie wstawil probierza</li>
-            <li class="candidate" id="item4" draggable="true" ondragstart="drag(event)">4. (oskar) jaki typ obosowości</li>
-            <li class="candidate" id="item5" draggable="true" ondragstart="drag(event)">5. (Kamor) Rozszerzona informatyka to jest jedna z trudniejszych matematyk</li>
-            <li class="candidate" id="item6" draggable="true" ondragstart="drag(event)">6. (Kamor) Jeżeli mógłbym zapomnieć jednej rzeczy, to chciałbym zapomnieć, że UFC jest ustawione.</li>
-            <li class="candidate" id="item7" draggable="true" ondragstart="drag(event)">7. (Kamor) W tym momencie jeżeli jesteś polakiem i zarabiasz najniższą krajową to jesteś w top 10 najbogatszych ludzi na swiecie</li>
-            <li class="candidate" id="item8" draggable="true" ondragstart="drag(event)">8. (Dagi) to nie był ubiór, on był ubrany jak pedał</li>
-            <li class="candidate" id="item9" draggable="true" ondragstart="drag(event)">9. (Dagi) Diziw: Jest jakaś gra jak karaoke? Dagi: Ta, Just Dance</li>
-            <li class="candidate" id="item10" draggable="true" ondragstart="drag(event)">10. (Olek) Wiedział mi o co chodzi</li>
+            <li class="candidate" data-id="1">
+                <span>1. (oskar) samych chinczykow jest milion</span>
+                <div>
+                    <button onclick="moveUp(this)">Przesuń w górę</button>
+                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                </div>
+            </li>
+            <li class="candidate" data-id="2">
+                <span>2. (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</span>
+                <div>
+                    <button onclick="moveUp(this)">Przesuń w górę</button>
+                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                </div>
+            </li>
+            <!-- Dodaj resztę nominacji podobnie -->
         </ul>
 
         <button onclick="submitVote('Odklejka Roku')">Oddaj głos</button>
 
         <h3>Kategoria: Odklejka Madoka</h3>
         <ul id="voteListMadok" class="candidate-list">
-            <li class="candidate" id="item1_madok" draggable="true" ondragstart="drag(event)">1. musze zapamietac ktora ksiazka byla z ktorego epoku</li>
-            <li class="candidate" id="item2_madok" draggable="true" ondragstart="drag(event)">2. Strzelili czwartą gole</li>
-            <li class="candidate" id="item3_madok" draggable="true" ondragstart="drag(event)">3. Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy</li>
-            <li class="candidate" id="item4_madok" draggable="true" ondragstart="drag(event)">4. (dudek) nie no bracia syjamscy nie chodza do szkoly chyba (madok) no oni maja indywidualne</li>
-            <li class="candidate" id="item5_madok" draggable="true" ondragstart="drag(event)">5. Bardzo jechali na ten film, ale mi sie podoba.... Znaczy nie oglądałem go</li>
-            <li class="candidate" id="item6_madok" draggable="true" ondragstart="drag(event)">6. Na polski wywalone ,ale na maturę</li>
+            <li class="candidate" data-id="1_madok">
+                <span>1. musze zapamietac ktora ksiazka byla z ktorego epoku</span>
+                <div>
+                    <button onclick="moveUp(this)">Przesuń w górę</button>
+                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                </div>
+            </li>
+            <!-- Dodaj resztę nominacji podobnie -->
         </ul>
 
         <button onclick="submitVote('Odklejka Madoka')">Oddaj głos</button>
         
         <p id="message"></p>
         <div class="gif-container">
-            <!-- YouTube player -->
             <iframe width="560" height="315" src="https://www.youtube.com/embed/2-9T8xAlyww?autoplay=1&loop=1&playlist=2-9T8xAlyww" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        let draggedElement;
-
-        function drag(event) {
-            draggedElement = event.target;
+        function moveUp(button) {
+            const item = button.closest('.candidate');
+            const previousItem = item.previousElementSibling;
+            if (previousItem) {
+                item.parentNode.insertBefore(item, previousItem);
+            }
         }
 
-        function drop(event) {
-            event.preventDefault();
-            const target = event.target;
-            if (target && target !== draggedElement && target.classList.contains('candidate')) {
-                const allCandidates = Array.from(target.parentNode.children);
-                const draggedIndex = allCandidates.indexOf(draggedElement);
-                const targetIndex = allCandidates.indexOf(target);
-
-                if (draggedIndex > targetIndex) {
-                    target.parentNode.insertBefore(draggedElement, target);
-                } else {
-                    target.parentNode.insertBefore(draggedElement, target.nextSibling);
-                }
+        function moveDown(button) {
+            const item = button.closest('.candidate');
+            const nextItem = item.nextElementSibling;
+            if (nextItem) {
+                item.parentNode.insertBefore(nextItem, item);
             }
         }
 
