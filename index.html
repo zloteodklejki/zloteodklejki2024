@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Złote Odklejki 2024 Sicarios Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
         
@@ -43,6 +44,10 @@
             align-items: center;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+        .candidate .buttons {
+            display: flex;
+            gap: 10px;
         }
         .candidate button {
             background-color: #4CAF50;
@@ -95,45 +100,58 @@
         <h3>Kategoria: Odklejka Roku</h3>
         <ul id="voteListNominations" class="candidate-list">
             <li class="candidate" data-id="1">
-                <span>1. (oskar) samych chinczykow jest milion</span>
-                <div>
-                    <button onclick="moveUp(this)">Przesuń w górę</button>
-                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                <span>(oskar) samych chinczykow jest milion - PUNKTY: 10</span>
+                <div class="buttons">
+                    <button onclick="moveUp(this)"><i class="fas fa-arrow-up"></i></button>
+                    <button onclick="moveDown(this)"><i class="fas fa-arrow-down"></i></button>
                 </div>
             </li>
             <li class="candidate" data-id="2">
-                <span>2. (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</span>
-                <div>
-                    <button onclick="moveUp(this)">Przesuń w górę</button>
-                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                <span>(oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem - PUNKTY: 9</span>
+                <div class="buttons">
+                    <button onclick="moveUp(this)"><i class="fas fa-arrow-up"></i></button>
+                    <button onclick="moveDown(this)"><i class="fas fa-arrow-down"></i></button>
                 </div>
             </li>
-            <!-- Dodaj resztę nominacji podobnie -->
+            <!-- Dodaj resztę nominacji -->
         </ul>
-
-        <button onclick="submitVote('Odklejka Roku')">Oddaj głos</button>
 
         <h3>Kategoria: Odklejka Madoka</h3>
         <ul id="voteListMadok" class="candidate-list">
             <li class="candidate" data-id="1_madok">
-                <span>1. musze zapamietac ktora ksiazka byla z ktorego epoku</span>
-                <div>
-                    <button onclick="moveUp(this)">Przesuń w górę</button>
-                    <button onclick="moveDown(this)">Przesuń w dół</button>
+                <span>musze zapamietac ktora ksiazka byla z ktorego epoku - PUNKTY: 10</span>
+                <div class="buttons">
+                    <button onclick="moveUp(this)"><i class="fas fa-arrow-up"></i></button>
+                    <button onclick="moveDown(this)"><i class="fas fa-arrow-down"></i></button>
                 </div>
             </li>
-            <!-- Dodaj resztę nominacji podobnie -->
+            <!-- Dodaj resztę nominacji -->
         </ul>
 
-        <button onclick="submitVote('Odklejka Madoka')">Oddaj głos</button>
-        
-        <p id="message"></p>
+        <div id="summary" style="display:none;">
+            <h3>Podsumowanie Głosowania</h3>
+            <p id="message"></p>
+            <button onclick="submitVote()">Oddaj głos</button>
+        </div>
+
         <div class="gif-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/2-9T8xAlyww?autoplay=1&loop=1&playlist=2-9T8xAlyww" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
+        let nominations = {
+            'Odklejka Roku': [
+                { id: 1, text: '(oskar) samych chinczykow jest milion', points: 10 },
+                { id: 2, text: '(oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem', points: 9 },
+                // Dodaj inne nominacje
+            ],
+            'Odklejka Madoka': [
+                { id: 1, text: 'musze zapamietac ktora ksiazka byla z ktorego epoku', points: 10 },
+                // Dodaj inne nominacje
+            ]
+        };
+
         function moveUp(button) {
             const item = button.closest('.candidate');
             const previousItem = item.previousElementSibling;
@@ -150,27 +168,44 @@
             }
         }
 
-        function submitVote(category) {
+        function submitVote() {
             const name = document.getElementById("name").value;
             if (!name) {
                 alert("Wpisz swoje imię, aby oddać głos.");
                 return;
             }
 
-            let nominations;
-            if (category === "Odklejka Roku") {
-                nominations = document.getElementById("voteListNominations").children;
-            } else {
-                nominations = document.getElementById("voteListMadok").children;
-            }
+            const categories = ['Odklejka Roku', 'Odklejka Madoka'];
+            let allVotes = {};
 
-            let points = [];
-            for (let i = 0; i < nominations.length; i++) {
-                points.push(nominations.length - i); // Najwyższa pozycja dostaje maksymalną liczbę punktów
-            }
+            categories.forEach(category => {
+                let nominationsList;
+                if (category === 'Odklejka Roku') {
+                    nominationsList = document.getElementById("voteListNominations").children;
+                } else {
+                    nominationsList = document.getElementById("voteListMadok").children;
+                }
 
-            let message = `Dziękujemy za oddanie głosu, ${name}!`;
+                let points = [];
+                for (let i = 0; i < nominationsList.length; i++) {
+                    points.push(nominationsList.length - i); // Najwyższa pozycja dostaje maksymalną liczbę punktów
+                }
+                allVotes[category] = points;
+            });
+
+            let message = `Dziękujemy za oddanie głosu, ${name}! Twoje głosy: \n`;
+
+            // Pokaż podsumowanie głosów
+            categories.forEach(category => {
+                message += `\n${category}:\n`;
+                const votes = allVotes[category];
+                for (let i = 0; i < votes.length; i++) {
+                    message += `Nominacja: ${nominations[category][i].text}, Punkty: ${votes[i]}\n`;
+                }
+            });
+
             document.getElementById("message").innerText = message;
+            document.getElementById("summary").style.display = 'block';
         }
     </script>
 </body>
