@@ -1,3 +1,13 @@
+Rozumiem! Chcesz, aby nominacje były przesuwalne i żeby użytkownicy mogli ustawiać je w preferowanej kolejności. Następnie punkty mają być przyznawane w zależności od tej kolejności. Oznacza to, że będziemy musieli użyć funkcji umożliwiającej przesuwanie pozycji nominacji (np. `draggable`), a po oddaniu głosu przyznać punkty na podstawie tej kolejności.
+
+Poniżej znajdziesz zaktualizowany kod, który obsługuje te wymagania:
+
+1. **Przesuwalne nominacje** - Dzięki `draggable="true"`, nominacje mogą być przeciągane i ustawiane w preferowanej kolejności.
+2. **Przyznawanie punktów** - Po ustawieniu kolejności przez użytkownika, punkty są przyznawane na podstawie pozycji nominacji (najwyższa pozycja dostaje punkty równe liczbie nominacji w danej kategorii).
+
+Oto kod HTML + JavaScript umożliwiający to:
+
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,6 +49,7 @@
             padding: 10px;
             margin: 5px 0;
             cursor: grab;
+            user-select: none;
         }
         button {
             background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
@@ -78,7 +89,7 @@
         <input type="text" id="name" placeholder="Twoje imię" required>
 
         <h3>Kategoria: Odklejka Roku</h3>
-        <ul id="voteListNominations" class="candidate-list">
+        <ul id="voteListNominations" class="candidate-list" ondrop="drop(event)" ondragover="allowDrop(event)">
             <li class="candidate" draggable="true">1. (oskar) samych chinczykow jest milion</li>
             <li class="candidate" draggable="true">2. (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</li>
             <li class="candidate" draggable="true">3. (oskar) czemu pep guardiola wczoraj nie wstawil probierza</li>
@@ -113,7 +124,7 @@
         <button onclick="submitVote('Odklejka Roku')">Oddaj głos</button>
 
         <h3>Kategoria: Odklejka Madoka</h3>
-        <ul id="voteListMadok" class="candidate-list">
+        <ul id="voteListMadok" class="candidate-list" ondrop="drop(event)" ondragover="allowDrop(event)">
             <li class="candidate" draggable="true">1. musze zapamietac ktora ksiazka byla z ktorego epoku</li>
             <li class="candidate" draggable="true">2. Strzelili czwartą gole</li>
             <li class="candidate" draggable="true">3. Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy</li>
@@ -134,8 +145,9 @@
             <li class="candidate" draggable="true">18. (na kanale ja maddock i dagi) Ja do Maddocka: Tylko ty tu jesteś 04 Maddock: Nie, dagi jest 05</li>
             <li class="candidate" draggable="true">19. Ty, na rozszerzeniu są też ustne</li>
         </ul>
+
         <button onclick="submitVote('Odklejka Madoka')">Oddaj głos</button>
-   
+        
         <p id="message"></p>
         <div class="gif-container">
             <!-- YouTube player -->
@@ -144,6 +156,27 @@
     </div>
 
     <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            var draggedElement = document.getElementById(data);
+            var target = event.target;
+            while (target && !target.classList.contains('candidate')) {
+                target = target.parentElement;
+            }
+            if (target && target !== draggedElement) {
+                target.parentNode.insertBefore(draggedElement, target.nextSibling || target);
+            }
+        }
+
         function submitVote(category) {
             var name = document.getElementById("name").value;
             if (!name) {
@@ -170,3 +203,6 @@
     </script>
 </body>
 </html>
+```
+
+### Zmiany
