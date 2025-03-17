@@ -5,43 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Złote Odklejki 2024 Sicarios Edition</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background: url('https://images-ext-1.discordapp.net/external/CgqEo5ki7xXMY-iD4bVDOW-l4FXwopse34H757i8MQw/https/media.tenor.com/s61ntdmcOWwAAAPo/dawid-jasper.mp4') no-repeat center center fixed;
+            text-align: justify;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-Iww5IYMTLTk9dSt3AozqUCW6bQ1oKn8Rg&s') no-repeat center center fixed;
             background-size: cover;
+            color: white;
         }
         .container {
             max-width: 600px;
             margin: 50px auto;
-            background: white;
+            background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         h1 {
             font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+        }
+        h2, h3 {
+            font-family: 'Pacifico', cursive;
+            text-align: center;
         }
         .candidate {
             margin: 15px 0;
         }
         button {
-            background-color: #007bff;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400% 400%;
+            animation: rainbow 3s infinite linear;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            display: block;
+            margin: 20px auto;
         }
-        button:hover {
-            background-color: #0056b3;
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .gif-container {
+            text-align: center;
             margin-top: 20px;
+        }
+        audio {
+            display: none;
         }
     </style>
 </head>
 <body>
+    <audio autoplay loop>
+        <source src="https://www.example.com/sentino_music.mp3" type="audio/mpeg">
+    </audio>
     <div class="container">
         <h1>Złote Odklejki 2024 Sicarios Edition</h1>
         <h2>Głosowanie na Odklejkę Roku</h2>
@@ -57,12 +78,6 @@
             <div class="candidate">
                 <input type="radio" name="voteMaddock" value="3"> Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy
             </div>
-            <div class="candidate">
-                <input type="radio" name="voteMaddock" value="4"> (dudek) nie no bracia syjamscy nie chodza do szkoly chyba (madok) no oni maja indywidualne
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteMaddock" value="5"> Bardzo jechali na ten film, ale mi sie podoba.... Znaczy nie oglądałem go
-            </div>
             <button type="submit">Oddaj głos</button>
         </form>
         
@@ -76,12 +91,6 @@
             </div>
             <div class="candidate">
                 <input type="radio" name="voteYear" value="3"> (oskar) czemu pep guardiola wczoraj nie wstawil probierza
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteYear" value="4"> (Kamor) Rozszerzona informatyka to jest jedna z trudniejszych matematyk
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteYear" value="5"> (Kamor) Jeżeli mógłbym zapomnieć jednej rzeczy, to chciałbym zapomnieć, że UFC jest ustawione.
             </div>
             <button type="submit">Oddaj głos</button>
         </form>
