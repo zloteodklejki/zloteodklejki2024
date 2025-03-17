@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Złote Antosie 2025 - Głosowanie na Odklejkę Roku</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .candidate {
+            margin: 15px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Złote Antosie 2025</h1>
+        <h2>Głosowanie na Odklejkę Roku</h2>
+        <form id="voteForm">
+            <div class="candidate">
+                <input type="radio" name="vote" value="remsua"> Remsua
+            </div>
+            <div class="candidate">
+                <input type="radio" name="vote" value="taazy"> Taazy
+            </div>
+            <div class="candidate">
+                <input type="radio" name="vote" value="inny"> Inny
+            </div>
+            <button type="submit">Oddaj głos</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.getElementById("voteForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            document.getElementById("message").innerText = "Dziękujemy za oddanie głosu!";
+        });
+    </script>
+</body>
+</html>
