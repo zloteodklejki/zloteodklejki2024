@@ -30,8 +30,15 @@
             font-family: 'Pacifico', cursive;
             text-align: center;
         }
+        .candidate-list {
+            list-style: none;
+            padding: 0;
+        }
         .candidate {
-            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 5px 0;
+            cursor: grab;
         }
         button {
             background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
@@ -68,32 +75,20 @@
         <h2>Głosowanie na Odklejkę Roku</h2>
         
         <h3>Kategoria: Maddock</h3>
-        <form id="voteFormMaddock">
-            <div class="candidate">
-                <input type="radio" name="voteMaddock" value="1"> musze zapamietac ktora ksiazka byla z ktorego epoku
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteMaddock" value="2"> Strzelili czwartą gole
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteMaddock" value="3"> Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy
-            </div>
-            <button type="submit">Oddaj głos</button>
-        </form>
+        <ul id="voteListMaddock" class="candidate-list">
+            <li class="candidate" draggable="true">musze zapamietac ktora ksiazka byla z ktorego epoku</li>
+            <li class="candidate" draggable="true">Strzelili czwartą gole</li>
+            <li class="candidate" draggable="true">Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy</li>
+        </ul>
+        <button onclick="submitVote('Maddock')">Oddaj głos</button>
         
         <h3>Kategoria: Rok</h3>
-        <form id="voteFormYear">
-            <div class="candidate">
-                <input type="radio" name="voteYear" value="1"> (oskar) samych chinczykow jest milion
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteYear" value="2"> (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem
-            </div>
-            <div class="candidate">
-                <input type="radio" name="voteYear" value="3"> (oskar) czemu pep guardiola wczoraj nie wstawil probierza
-            </div>
-            <button type="submit">Oddaj głos</button>
-        </form>
+        <ul id="voteListYear" class="candidate-list">
+            <li class="candidate" draggable="true">(oskar) samych chinczykow jest milion</li>
+            <li class="candidate" draggable="true">(oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</li>
+            <li class="candidate" draggable="true">(oskar) czemu pep guardiola wczoraj nie wstawil probierza</li>
+        </ul>
+        <button onclick="submitVote('Year')">Oddaj głos</button>
 
         <p id="message"></p>
         <div class="gif-container">
@@ -102,15 +97,26 @@
     </div>
 
     <script>
-        document.getElementById("voteFormMaddock").addEventListener("submit", function(event) {
-            event.preventDefault();
-            document.getElementById("message").innerText = "Dziękujemy za oddanie głosu w kategorii Maddock!";
+        document.querySelectorAll(".candidate-list").forEach(list => {
+            list.addEventListener("dragstart", event => {
+                event.dataTransfer.setData("text/plain", event.target.innerText);
+            });
+            list.addEventListener("dragover", event => {
+                event.preventDefault();
+            });
+            list.addEventListener("drop", event => {
+                event.preventDefault();
+                const data = event.dataTransfer.getData("text/plain");
+                const draggedItem = [...list.children].find(li => li.innerText === data);
+                if (draggedItem) {
+                    list.appendChild(draggedItem);
+                }
+            });
         });
 
-        document.getElementById("voteFormYear").addEventListener("submit", function(event) {
-            event.preventDefault();
-            document.getElementById("message").innerText = "Dziękujemy za oddanie głosu w kategorii Rok!";
-        });
+        function submitVote(category) {
+            document.getElementById("message").innerText = `Dziękujemy za oddanie głosu w kategorii ${category}!`;
+        }
     </script>
 </body>
 </html>
