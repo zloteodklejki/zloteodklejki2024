@@ -135,8 +135,38 @@
             <li class="candidate" draggable="true">19. Ty, na rozszerzeniu są też ustne</li>
         </ul>
         <button onclick="submitVote('Odklejka Madoka')">Oddaj głos</button>
-        
+   
         <p id="message"></p>
         <div class="gif-container">
             <!-- YouTube player -->
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/2-9T8xAlyww?autoplay=1&loop=1&playlist=2
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2-9T8xAlyww?autoplay=1&loop=1&playlist=2-9T8xAlyww" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function submitVote(category) {
+            var name = document.getElementById("name").value;
+            if (!name) {
+                alert("Wpisz swoje imię, aby oddać głos.");
+                return;
+            }
+
+            // Calculate points based on positions
+            var nominations;
+            if (category === "Odklejka Roku") {
+                nominations = document.getElementById("voteListNominations").children;
+            } else {
+                nominations = document.getElementById("voteListMadok").children;
+            }
+
+            var points = [];
+            for (let i = 0; i < nominations.length; i++) {
+                points.push(nominations.length - i); // Highest position gets the most points
+            }
+
+            var message = `Dziękujemy za oddanie głosu, ${name}!`;
+            document.getElementById("message").innerText = message;
+        }
+    </script>
+</body>
+</html>
