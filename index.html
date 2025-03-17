@@ -1,3 +1,10 @@
+Wprowadziłem zmiany zgodnie z Twoimi życzeniami. Dodane zostały następujące funkcjonalności:
+1. **Pole na wpisanie imienia** przed oddaniem głosów.
+2. **Punkty przyznawane w zależności od pozycji**: Najwyższa nominacja w danej kategorii dostaje tyle punktów, ile jest nominacji w tej kategorii. Kolejne nominacje dostają odpowiednią liczbę punktów (o 1 mniej za każdą kolejną pozycję).
+
+Oto zaktualizowany kod:
+
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -73,50 +80,70 @@
     <div class="container">
         <h1>Złote Odklejki 2024 Sicarios Edition</h1>
         <h2>Głosowanie na Odklejkę Roku</h2>
-        
-        <h3>Kategoria: Maddock</h3>
-        <ul id="voteListMaddock" class="candidate-list">
-            <li class="candidate" draggable="true">musze zapamietac ktora ksiazka byla z ktorego epoku</li>
-            <li class="candidate" draggable="true">Strzelili czwartą gole</li>
-            <li class="candidate" draggable="true">Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy</li>
-        </ul>
-        <button onclick="submitVote('Maddock')">Oddaj głos</button>
-        
-        <h3>Kategoria: Rok</h3>
-        <ul id="voteListYear" class="candidate-list">
-            <li class="candidate" draggable="true">(oskar) samych chinczykow jest milion</li>
-            <li class="candidate" draggable="true">(oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</li>
-            <li class="candidate" draggable="true">(oskar) czemu pep guardiola wczoraj nie wstawil probierza</li>
-        </ul>
-        <button onclick="submitVote('Year')">Oddaj głos</button>
 
+        <label for="name">Wpisz swoje imię:</label>
+        <input type="text" id="name" placeholder="Twoje imię" required>
+
+        <h3>Kategoria: Odklejka Roku</h3>
+        <ul id="voteListNominations" class="candidate-list">
+            <li class="candidate" draggable="true">1. (oskar) samych chinczykow jest milion</li>
+            <li class="candidate" draggable="true">2. (oskar) ja bym wolal skakac z samochodu z tamtym strojem zamiast ze spadochronem</li>
+            <li class="candidate" draggable="true">3. (oskar) czemu pep guardiola wczoraj nie wstawil probierza</li>
+            <li class="candidate" draggable="true">4. (oskar) jaki typ obosowości</li>
+            <li class="candidate" draggable="true">5. (Kamor) Rozszerzona informatyka to jest jedna z trudniejszych matematyk</li>
+            <li class="candidate" draggable="true">6. (Kamor) Jeżeli mógłbym zapomnieć jednej rzeczy, to chciałbym zapomnieć, że UFC jest ustawione.</li>
+            <li class="candidate" draggable="true">7. (Kamor) W tym momencie jeżeli jesteś polakiem i zarabiasz najniższą krajową to jesteś w top 10 najbogatszych ludzi na swiecie</li>
+            <li class="candidate" draggable="true">8. (Dagi) to nie był ubiór, on był ubrany jak pedał</li>
+            <li class="candidate" draggable="true">9. (Dagi) Diziw: Jest jakaś gra jak karaoke? Dagi: Ta, Just Dance</li>
+            <li class="candidate" draggable="true">10. (Olek) Wiedział mi o co chodzi</li>
+            <li class="candidate" draggable="true">11. (Olek) Olek: Lalalala Dagi: Ty jestes poważnie chory tak? Olek: Kto? Lalalala</li>
+            <li class="candidate" draggable="true">12. (diziv) fejn</li>
+            <li class="candidate" draggable="true">13. (diziv) ten łoś co roku stoi w tym samym roku</li>
+            <li class="candidate" draggable="true">14. (diziv) Diziv: ej to mozna w koncu przerzucac miedzy serwerami juz?</li>
+            <li class="candidate" draggable="true">15. (diziv) Wtorkowy kubełek (kfc) jest tylko we wtorek?</li>
+            <li class="candidate" draggable="true">16. (diziv) Otwieram mikrofalówke, a tam jeszcze szakszuka z wczoraja</li>
+            <li class="candidate" draggable="true">17. (haski) ty nie wiesz gdzie jest plus a gdzie minus w kablach</li>
+            <li class="candidate" draggable="true">18. (haski) ja jechałem ze szczepanem dzisiaj do stolarium(chodziło że do stolarza)</li>
+            <li class="candidate" draggable="true">19. (haski) tribas (chodziło o tribbsa)</li>
+            <li class="candidate" draggable="true">20. (haski) (reklama jokera) Haski: O, Jopek!</li>
+            <li class="candidate" draggable="true">21. (Haski) ja mam małego zapisanego tak (chodziło o numer Maddocka w telefonie)</li>
+            <li class="candidate" draggable="true">22. (Haski) Dzisiaj wogole w szkole był plagiat kebabów (plaga)</li>
+            <li class="candidate" draggable="true">23. (HASKI) Maddock wiesz jak to było przebijać? (przebijało dźwięk u madoka)</li>
+            <li class="candidate" draggable="true">24. (Haski) Czekaj madok zaraz ci coś wyśle na meseńdżerze ...... 3sec później ...... czekaj jak ty się nazywasz?</li>
+            <li class="candidate" draggable="true">25. [haski] dawaj piekłem do windy</li>
+            <li class="candidate" draggable="true">26. (haski) Diziw: Co to znaczy lung Haski: Długi</li>
+            <li class="candidate" draggable="true">27. (haski) z kranu ma sie lać dżony łejker</li>
+            <li class="candidate" draggable="true">28. (haski) Spierdalaj, ja jestem homoseksualny</li>
+            <li class="candidate" draggable="true">29. (Haski) Historia bałkan</li>
+        </ul>
+
+        <button onclick="submitVote('Odklejka Roku')">Oddaj głos</button>
+
+        <h3>Kategoria: Odklejka Madoka</h3>
+        <ul id="voteListMadok" class="candidate-list">
+            <li class="candidate" draggable="true">1. musze zapamietac ktora ksiazka byla z ktorego epoku</li>
+            <li class="candidate" draggable="true">2. Strzelili czwartą gole</li>
+            <li class="candidate" draggable="true">3. Tam na r/rimming to zapisują rymy ci... Ghost Rajderzy</li>
+            <li class="candidate" draggable="true">4. (dudek) nie no bracia syjamscy nie chodza do szkoly chyba (madok) no oni maja indywidualne</li>
+            <li class="candidate" draggable="true">5. Bardzo jechali na ten film, ale mi sie podoba.... Znaczy nie oglądałem go</li>
+            <li class="candidate" draggable="true">6. Na polski wywalone ,ale na maturę</li>
+            <li class="candidate" draggable="true">7. do gory nogami gadam</li>
+            <li class="candidate" draggable="true">8. jakbym sie sluchal diziva to bym w zime w skarpetkach chodzil</li>
+            <li class="candidate" draggable="true">9. Ja od razu jak do jakiegoś serwera dołanczam to od razu go wyłanczam</li>
+            <li class="candidate" draggable="true">10. Maddock: SUI JA: Szwajcaria strzeliła? Maddock: Nie Sweden tylko SUI</li>
+            <li class="candidate" draggable="true">11. DiZiV : Chciałem coś ogłosić Maddock : Jestem gejem, czekaj co, nie to ty jesteś gejem.</li>
+            <li class="candidate" draggable="true">12. Pani mi dała to co ostatnio, więc leciałem z pamięciówy</li>
+            <li class="candidate" draggable="true">13. Ja to do mojej pani powiedzialem, whats up suck my dick</li>
+            <li class="candidate" draggable="true">14. Dagi: Bambi byla kiedys w The Voice Kids Madok: Ty to Misia, ona ma na imie Misia? Dagi: No, Michalina Madok: Aha</li>
+            <li class="candidate" draggable="true">15. masz parę siódemków</li>
+            <li class="candidate" draggable="true">16. Przecież w weekendy masz tanie tankowanie w środę</li>
+            <li class="candidate" draggable="true">17. To jest ta baba Black Window. A wiecie że ja kiedyś myślałem, że to serio jest black window</li>
+            <li class="candidate" draggable="true">18. (na kanale ja maddock i dagi) Ja do Maddocka: Tylko ty tu jesteś 04 Maddock: Nie, dagi jest 05</li>
+            <li class="candidate" draggable="true">19. Ty, na rozszerzeniu są też ustne</li>
+        </ul>
+        <button onclick="submitVote('Odklejka Madoka')">Oddaj głos</button>
+        
         <p id="message"></p>
         <div class="gif-container">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-Iww5IYMTLTk9dSt3AozqUCW6bQ1oKn8Rg&s" alt="GIF">
-        </div>
-    </div>
-
-    <script>
-        document.querySelectorAll(".candidate-list").forEach(list => {
-            list.addEventListener("dragstart", event => {
-                event.dataTransfer.setData("text/plain", event.target.innerText);
-            });
-            list.addEventListener("dragover", event => {
-                event.preventDefault();
-            });
-            list.addEventListener("drop", event => {
-                event.preventDefault();
-                const data = event.dataTransfer.getData("text/plain");
-                const draggedItem = [...list.children].find(li => li.innerText === data);
-                if (draggedItem) {
-                    list.appendChild(draggedItem);
-                }
-            });
-        });
-
-        function submitVote(category) {
-            document.getElementById("message").innerText = `Dziękujemy za oddanie głosu w kategorii ${category}!`;
-        }
-    </script>
-</body>
-</html>
+            <!-- YouTube player -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2-9T8xAlyww?autoplay=1&loop=1&playlist=2
